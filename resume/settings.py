@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-4o57o*=oa$sabf05!+!9*4(6euiw638@quf2$s=*y#8zbe@xf6
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['resume-builder930.herokuapp.com', '127.0.0.1:8000']
 
 
 # Application definition
