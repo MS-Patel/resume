@@ -1,13 +1,13 @@
 
 from django.shortcuts import render,redirect
 from django.contrib import messages
-from django.http import HttpResponseNotFound
-from faunadb import query as q
-import pytz
-from faunadb.objects import Ref
-from faunadb.client import FaunaClient
-import hashlib
-import datetime
+# from django.http import HttpResponseNotFound
+# from faunadb import query as q
+# import pytz
+# from faunadb.objects import Ref
+# from faunadb.client import FaunaClient
+# import hashlib
+# import datetime
 
 
 # Create your views here.
@@ -28,12 +28,12 @@ def login(request):
                     "id": user["ref"].id(),
                     "username": user["data"]["username"]
                 }
-                return redirect("App:index")
+                return redirect("app:index")
             else:
                 raise Exception()
         except:
             messages.add_message(request, messages.INFO,"You have supplied invalid login credentials, please try again!", "danger")
-            return redirect("App:login")
+            return redirect("login")
     return render(request,"login.html")
 
 def register(request):
@@ -61,6 +61,7 @@ def register(request):
     return render(request,"register.html")
 
 def create_resume(request):
+    return render(request,"create-resume.html")
     if request.method=="POST":
         username=request.session["user"]["username"]
         full_name=request.POST.get("name")
@@ -137,6 +138,7 @@ def create_resume(request):
             return render(request,"create-resume.html")
 
 def resume(request):
+    return render(request,"resume.html")
     try:
         resume_info = client.query(q.get(q.match(q.index("resume_index"), request.session["user"]["username"])))["data"]
         context={"resume_info":resume_info}
