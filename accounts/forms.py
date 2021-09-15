@@ -1,5 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.forms import fields
@@ -58,3 +58,26 @@ class RegistrationForm(forms.ModelForm):
             {'class': 'form-control', 'placeholder': 'Password'})
         self.fields['password2'].widget.attrs.update(
             {'class': 'form-control', 'placeholder': 'Repeat Password'})
+
+
+class PwdResetConfirmForm(SetPasswordForm):
+    new_password1 = forms.CharField(
+        label='New password', widget=forms.PasswordInput(
+            attrs={'class': 'form-control mb-3', 'placeholder': 'New Password', 'id': 'form-newpass'}))
+    new_password2 = forms.CharField(
+        label='Repeat password', widget=forms.PasswordInput(
+            attrs={'class': 'form-control mb-3', 'placeholder': 'New Password', 'id': 'form-new-pass2'}))
+
+
+class PwdResetForm(PasswordResetForm):
+
+    email = forms.EmailField(max_length=254, widget=forms.TextInput(
+        attrs={'class': 'form-control-mb3', 'placeholder': 'Email', 'id': 'form-email'}))
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email).exists():
+            return email
+        else:
+            raise forms.ValidationError(
+                "Please use another Email, this email does not exist.")

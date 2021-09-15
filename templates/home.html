@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <title>
+        Resume Builder
+    </title>
+    <link href="{% static 'style.css' %}" rel="stylesheet" />
+</head>
+
+<body>
+    <!-- partial:home.partial.html -->
+    <div id="javascript_header">
+    </div>
+    Hello there...!
+    Do you want to create a resume?
+    Please Register here:<p class="">
+        <a style="text-decoration: none; padding: 5px;" href="{% url 'accounts:register' %}">Register</a>
+    </p>
+    Already Have Account? Login Here:<p class="">
+        <a style="text-decoration: none; padding: 5px;" href="{% url 'accounts:login' %}">Log-in</a>
+    </p>
+    <!-- partial -->
+    <script src="{% static 'script.js' %}">
+    </script>
+</body>
+
+</html>

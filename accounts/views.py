@@ -14,10 +14,6 @@ from .token import account_activation_token
 # Create your views here.
 
 
-def register(request):
-    return True
-
-
 @login_required
 def profile(request):
     return render(request, 'accounts/profile.html', {'section': 'profile'})
@@ -30,33 +26,33 @@ def account_register(request):
             user = registerForm.save(commit=False)
             user.email = registerForm.cleaned_data['email']
             user.set_password(registerForm.cleaned_data['password'])
-            user.is_active = False
+            user.is_active = True
             user.save()
-            current_site = get_current_site(request)
-            subject = 'Activate your Account'
-            message = render_to_string('registration/account_activation_email.html', {
-                'user': user,
-                'domain': current_site.domain,
-                'uid': urlsafe_base64_encode(force_bytes(user.pk)),
-                'token': account_activation_token.make_token(user),
-            })
-            user.email_user(subject=subject, message=message)
-            return HttpResponse('registered succesfully and activation sent')
+            # current_site = get_current_site(request)
+            # subject = 'Activate your Account'
+            # message = render_to_string('registration/account_activation_email.html', {
+            #     'user': user,
+            #     'domain': current_site.domain,
+            #     'uid': urlsafe_base64_encode(force_bytes(user.pk)),
+            #     'token': account_activation_token.make_token(user),
+            # })
+            # user.email_user(subject=subject, message=message)
+            return HttpResponse('Registered succesfully...!')
     else:
         registerForm = RegistrationForm()
     return render(request, 'registration/register.html', {'form': registerForm})
 
 
-def activate(request, uidb64, token):
-    try:
-        uid = force_text(urlsafe_base64_decode(uidb64))
-        user = User.objects.get(pk=uid)
-    except(TypeError, ValueError, OverflowError, User.DoesNotExist):
-        user = None
-    if user is not None and account_activation_token.check_token(user, token):
-        user.is_active = True
-        user.save()
-        login(request, user)
-        return redirect('login')
-    else:
-        return render(request, 'registration/activation_invalid.html')
+# def activate(request, uidb64, token):
+#     try:
+#         uid = force_text(urlsafe_base64_decode(uidb64))
+#         user = User.objects.get(pk=uid)
+#     except(TypeError, ValueError, OverflowError, User.DoesNotExist):
+#         user = None
+#     if user is not None and account_activation_token.check_token(user, token):
+#         user.is_active = True
+#         user.save()
+#         login(request, user)
+#         return redirect('login')
+#     else:
+#         return render(request, 'registration/activation_invalid.html')
