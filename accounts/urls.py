@@ -15,7 +15,7 @@ urlpatterns = [
         template_name='registration/password_reset_confirm.html', form_class=PwdResetConfirmForm), name="pwdresetconfirm"),
     path("profile/", views.profile, name="profile"),
     path("register/", views.account_register, name="register"),
-    # path("activate/<slug:uidb64>/<slug:token>/",
-    #      views.activate, name = 'activate'),
+    path("activate/<slug:uidb64>/<slug:token>/",
+         views.activate, name='activate'),
 
 ]
