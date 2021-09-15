@@ -26,7 +26,7 @@ def account_register(request):
             user = registerForm.save(commit=False)
             user.email = registerForm.cleaned_data['email']
             user.set_password(registerForm.cleaned_data['password'])
-            user.is_active = True
+            user.is_active = False
             user.save()
             current_site = get_current_site(request)
             subject = 'Activate your Account'
@@ -37,7 +37,7 @@ def account_register(request):
                 'token': account_activation_token.make_token(user),
             })
             user.email_user(subject=subject, message=message)
-            return HttpResponse('Registered succesfully...!')
+            return HttpResponse('registered succesfully and activation sent')
     else:
         registerForm = RegistrationForm()
     return render(request, 'registration/register.html', {'form': registerForm})
