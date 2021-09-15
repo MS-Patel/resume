@@ -1,11 +1,8 @@
 
-from django.shortcuts import render, redirect
-from django.contrib import messages
-from django.http import HttpResponseNotFound
-import pytz
+from django.http.response import HttpResponse
+from app.forms import ResumeForm
+from django.shortcuts import redirect, render
 from .models import Resume
-import hashlib
-import datetime
 
 
 # Create your views here.
@@ -16,85 +13,33 @@ def home(request):
 
 
 def create_resume(request):
-    if request.method == "POST":
-        username = Resume.objects.create()
-        full_name = request.POST.get("name")
-        address = request.POST.get("address")
-        phone = request.POST.get("phone")
-        email = request.POST.get("email")
-        about_you = request.POST.get("about")
-        education = request.POST.get("education")
-        career = request.POST.get("career")
-        job_1__start = request.POST.get("job-1_start")
-        job_1__end = request.POST.get("job-1_end")
-        job_1__details = request.POST.get("job-1_details")
-        job_2__start = request.POST.get("job-2_start")
-        job_2__end = request.POST.get("job-2_end")
-        job_2__details = request.POST.get("job-2_details")
-        job_3__start = request.POST.get("job-3_start")
-        job_3__end = request.POST.get("job-3_end")
-        job_3__details = request.POST.get("job-3_details")
-        references = request.POST.get("references")
-    #     try:
-    #         resume = client.query(
-    #             q.get(q.match(q.index("resume_index"), username)))
-    #         quiz = client.query(q.update(q.ref(q.collection("Resume_Info"), resume["ref"].id()), {
-    #             "data": {
-    #                 "user": username,
-    #                 "full_name": full_name,
-    #                 "address": address,
-    #                 "phone": phone,
-    #                 "email": email,
-    #                 "about_you": about_you,
-    #                 "education": education,
-    #                 "career": career,
-    #                 "job_1__start": job_1__start,
-    #                 "job_1__end": job_1__end,
-    #                 "job_1__details": job_1__details,
-    #                 "job_2__start": job_2__start,
-    #                 "job_2__end": job_2__end,
-    #                 "job_2__details": job_2__details,
-    #                 "job_3__start": job_3__start,
-    #                 "job_3__end": job_3__end,
-    #                 "job_3__details": job_3__details,
-    #             }
-    #         }))
-    #         messages.add_message(
-    #             request, messages.INFO, 'Resume Info Edited Successfully. Download Resume Now')
-    #         return redirect("App:create-resume")
-    #     except:
-    #         quiz = client.query(q.create(q.collection("Resume_Info"), {
-    #             "data": {
-    #                 "user": username,
-    #                 "full_name": full_name,
-    #                 "address": address,
-    #                 "phone": phone,
-    #                 "email": email,
-    #                 "about_you": about_you,
-    #                 "education": education,
-    #                 "job_1__start": job_1__start,
-    #                 "job_1__end": job_1__end,
-    #                 "job_1__details": job_1__details,
-    #                 "job_2__start": job_2__start,
-    #                 "job_2__end": job_2__end,
-    #                 "job_2__details": job_2__details,
-    #                 "job_3__start": job_3__start,
-    #                 "job_3__end": job_3__end,
-    #                 "job_3__details": job_3__details,
-    #             }
-    #         }))
-    #         messages.add_message(
-    #             request, messages.INFO, 'Resume Info Saved Successfully. Download Resume Now')
-    #         return redirect("App:resume")
-    # else:
-    #     try:
-    #         resume_info = client.query(q.get(
-    #             q.match(q.index("resume_index"), request.session["user"]["username"])))["data"]
-    #         context = {"resume_info": resume_info}
-    #         return render(request, "create-resume.html", context)
-    #     except:
-    #
-    return render(request, "create-resume.html")
+    if request.method == 'POST':
+        form = ResumeForm(request.POST)
+        if form.is_valid():
+            data = Resume()
+            data.full_name = form.cleaned_data['full_name']
+            data.address = form.cleaned_data['address']
+            data.phone = form.cleaned_data['phone']
+            data.email = form.cleaned_data['email']
+            data.about_you = form.cleaned_data['about_you']
+            data.education = form.cleaned_data['education']
+            data.career = form.cleaned_data['career']
+            data.job_1_start = form.cleaned_data['job_1_start']
+            data.job_1_end = form.cleaned_data['job_1_end']
+            data.job_1_details = form.cleaned_data['job_1_details']
+            data.job_2_start = form.cleaned_data['job_2_start']
+            data.job_2_end = form.cleaned_data['job_2_end']
+            data.job_2_details = form.cleaned_data['job_2_details']
+            data.job_3_start = form.cleaned_data['job_3_start']
+            data.job_3_end = form.cleaned_data['job_3_end']
+            data.job_3_details = form.cleaned_data['job_3_details']
+            data.references = form.cleaned_data['references']
+            data.image = form.cleaned_data['image']
+            data.save()
+            return HttpResponse("Resume create:")
+    else:
+        form = ResumeForm()
+    return render(request, "create-resume.html", {'form': form})
 
 
 def resume(request):

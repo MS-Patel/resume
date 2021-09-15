@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8" />
     <title>
-        Fauna Resume Builder
+        Create Resume
     </title>
     <link href="{% static './style.css' %}" rel="stylesheet" />
 </head>
@@ -14,7 +14,20 @@
     <!-- partial:index.partial.html -->
     <div id="javascript_header">
     </div>
-    <form method="POST">
+
+    <form action="{% url 'app:create-resume' %}" method="POST">
+        {% if form.errors %}
+        <div class="alert alert-primary" role="alert">
+            error
+        </div>
+        {% endif %}
+
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button class="button" type="submit" value="log-in">Create resume</button>
+    </form>
+
+    <!-- <form method="POST">
         {% csrf_token %}
         <ul class="messages">
             {% for message in messages %}
@@ -176,7 +189,7 @@
         <br>
         <a class="button" style="background-color:red;" href="{% url 'accounts:login' %}">Back to home</a>
     </form>
-    <!-- partial -->
+    partial -->
     <script src="{% static './script.js' %}">
     </script>
 </body>

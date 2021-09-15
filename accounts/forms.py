@@ -2,7 +2,6 @@ from django import forms
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm, PasswordResetForm, SetPasswordForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
-from django.forms import fields
 
 
 class UserLoginForm(AuthenticationForm):
@@ -26,7 +25,7 @@ class RegistrationForm(forms.ModelForm):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'first_name',)
+        fields = ('username', 'email',)
 
     def clean_username(self):
         username = self.cleaned_data['username'].lower()
