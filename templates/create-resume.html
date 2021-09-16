@@ -7,14 +7,13 @@
     <title>
         Create Resume
     </title>
-    <link href="{% static './style.css' %}" rel="stylesheet" />
+    <link href="{% static '/style.css' %}" rel="stylesheet" />
 </head>
 
 <body>
     <!-- partial:index.partial.html -->
     <div id="javascript_header">
     </div>
-
     <form enctype="multipart/form-data" action="{% url 'app:create-resume' %}" method="POST">
         {% if form.errors %}
         <div class="alert alert-primary" role="alert">
@@ -190,7 +189,7 @@
         <a class="button" style="background-color:red;" href="{% url 'accounts:login' %}">Back to home</a>
     </form>
     partial -->
-    <script src="{% static './script.js' %}">
+    <script src="{% static '/script.js' %}">
     </script>
 </body>
 

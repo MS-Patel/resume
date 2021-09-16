@@ -11,10 +11,10 @@ def user_directory_path(instance, filename):
 
 class Resume(models.Model):
     username = models.OneToOneField(
-        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True, unique=False)
     full_name = models.CharField(max_length=100)
     address = models.CharField(max_length=250)
-    phone = models.IntegerField()
+    phone = models.CharField(max_length=10)
     email = models.EmailField(max_length=150)
     about_you = models.TextField(max_length=400)
     education = models.CharField(max_length=250)
@@ -30,7 +30,7 @@ class Resume(models.Model):
     job_3_details = models.CharField(max_length=250, null=True)
     references = models.CharField(max_length=250, null=True)
     image = models.ImageField(
-        upload_to=user_directory_path, default='user/default.png')
+        upload_to=user_directory_path, default="user/default.jpg")
 
     def __str__(self):
         return self.title

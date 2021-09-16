@@ -37,7 +37,8 @@ def create_resume(request):
             data.job_3_end = form.cleaned_data['job_3_end']
             data.job_3_details = form.cleaned_data['job_3_details']
             data.references = form.cleaned_data['references']
-            data.image = form.cleaned_data['image']
+            if form.cleaned_data['image'] is not None:
+                data.image = form.cleaned_data['image']
             data.save()
             return HttpResponse("Resume create:")
     else:
