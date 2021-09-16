@@ -1,4 +1,6 @@
 from django.db import models
+from django.conf import settings
+from django.db.models.fields.related import ForeignKey
 
 # Create your models here.
 
@@ -8,7 +10,8 @@ def user_directory_path(instance, filename):
 
 
 class Resume(models.Model):
-
+    username = models.OneToOneField(
+        settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     full_name = models.CharField(max_length=100)
     address = models.CharField(max_length=250)
     phone = models.IntegerField()
@@ -27,4 +30,4 @@ class Resume(models.Model):
     job_3_details = models.CharField(max_length=250, null=True)
     references = models.CharField(max_length=250, null=True)
     image = models.ImageField(
-        upload_to=user_directory_path, default='post/default.png')
+        upload_to=user_directory_path, default='user/default.png')

@@ -1,5 +1,6 @@
 
 from django.http.response import HttpResponse
+from django.contrib.auth.decorators import login_required
 from app.forms import ResumeForm
 from django.shortcuts import redirect, render
 from .models import Resume
@@ -12,11 +13,13 @@ def home(request):
     return render(request, "home.html")
 
 
+@login_required
 def create_resume(request):
     if request.method == 'POST':
         form = ResumeForm(request.POST)
         if form.is_valid():
             data = Resume()
+            data.username = request.user
             data.full_name = form.cleaned_data['full_name']
             data.address = form.cleaned_data['address']
             data.phone = form.cleaned_data['phone']
