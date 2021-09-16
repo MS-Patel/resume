@@ -6,7 +6,7 @@ from django.db.models.fields.related import ForeignKey
 
 
 def user_directory_path(instance, filename):
-    return 'user/{0}/{1}'.format(instance.id, filename)
+    return 'user/{0}/{1}'.format(instance.username_id, filename)
 
 
 class Resume(models.Model):
@@ -31,3 +31,6 @@ class Resume(models.Model):
     references = models.CharField(max_length=250, null=True)
     image = models.ImageField(
         upload_to=user_directory_path, default='user/default.png')
+
+    def __str__(self):
+        return self.title

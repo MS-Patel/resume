@@ -16,7 +16,7 @@ def home(request):
 @login_required
 def create_resume(request):
     if request.method == 'POST':
-        form = ResumeForm(request.POST)
+        form = ResumeForm(request.POST, request.FILES)
         if form.is_valid():
             data = Resume()
             data.username = request.user
