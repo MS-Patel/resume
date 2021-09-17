@@ -401,8 +401,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="d-flex mb-2">
-                                    <div class="avatar"><img src="images/reference-image-2.jpg" width="60"
-                                            height="60" /></div>
+                                    <div class="avatar"><img src="{% static 'images/reference-image-2.jpg' %}"
+                                            width="60" height="60" /></div>
                                     <div class="header-bio m-3 mb-0">
                                         <h3 class="h6 mb-1" data-aos="fade-left" data-aos-delay="0">Alexander</h3>
                                         <p class="text-muted text-small" data-aos="fade-left" data-aos-delay="100">
@@ -461,7 +461,7 @@
     <footer class="pt-4 pb-4 text-muted text-center d-print-none">
         <div class="container">
             <div class="my-3">
-                <div class="h4">Walter Patterson</div>
+                <div class="h4">{{resume_info.full_name}}</div>
                 <div class="footer-nav">
                     <nav role="navigation">
                         <ul class="nav justify-content-center">
@@ -487,7 +487,6 @@
             </div>
             <div class="text-small">
                 <div class="mb-1">&copy; Material Resume. All rights reserved.</div>
-                <div>Design - <a href="https://templateflip.com/" target="_blank">TemplateFlip</a></div>
             </div>
         </div>
     </footer>

@@ -40,7 +40,7 @@ def create_resume(request):
             if form.cleaned_data['image'] is not None:
                 data.image = form.cleaned_data['image']
             data.save()
-            return HttpResponse("Resume create:")
+            return redirect(request, "app:profile")
     else:
         form = ResumeForm()
     return render(request, "create-resume.html", {'form': form})
