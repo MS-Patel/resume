@@ -47,11 +47,8 @@ def create_resume(request):
 
 
 def resume(request):
-    return render(request, "resume.html")
-    try:
-        resume_info = client.query(q.get(
-            q.match(q.index("resume_index"), request.session["user"]["username"])))["data"]
-        context = {"resume_info": resume_info}
-        return render(request, "resume.html", context)
-    except:
-        return render(request, "resume.html")
+
+    resume_info = Resume.objects.get(username_id=request.user.id)
+
+    context = {"resume_info": resume_info}
+    return render(request, "resume.html", context)
