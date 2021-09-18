@@ -1,20 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Create Resume
+{% endblock %}
+
+
+{% block content %}
+
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="utf-8" />
-    <title>
-        Create Resume
-    </title>
-    <link href="{% static 'style.css' %}" rel="stylesheet" />
-</head>
-
-<body>
-    <!-- partial:index.partial.html -->
-    <div id="javascript_header">
-    </div>
-    <form enctype="multipart/form-data" action="{% url 'app:create-resume' %}" method="POST">
+<div style="margin-top:50px;">
+    <form enctype=" multipart/form-data" action="{% url 'app:create-resume' %}" method="POST">
         {% if form.errors %}
         <div class="alert alert-primary" role="alert">
             error
@@ -22,175 +18,84 @@
         {% endif %}
 
         {% csrf_token %}
-        {{ form.as_p }}
-        <button class="button" type="submit" value="log-in">Create resume</button>
-    </form>
 
-    <!-- <form method="POST">
-        {% csrf_token %}
-        <ul class="messages">
-            {% for message in messages %}
-            <li{% if message.tags %} class="{{ message.tags }}" {% endif %} style="color:red;">{{ message }}</li>
-                {% endfor %}
-        </ul>
-        <div class="form__header">
-            <h1>
-                Build Your Resume
-            </h1>
-            <p>
-                Enter the fields below to generate a resume file.
-            </p>
-        </div>
-        <h2>
-            Personal Details
-        </h2>
         <div class="form-group">
-            <label for="name">
-                Full Name
-                <span>
-                    *
-                </span>
-            </label>
-            <input id="name" name="name" value="{{resume_info.full_name}}" type="text" />
-            <div class="error" id="name__error">
-            </div>
+            <label for="exampleInputEmail1">{{ form.full_name.label }}</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                placeholder="Enter Full Name">
         </div>
         <div class="form-group">
-            <label for="address">
-                Address
-            </label>
-            <input id="address" name="address" value="{{resume_info.address}}" type="text" />
+            <label for="exampleInputEmail1">{{ form.email.label }}</label>
+            <input type="email" class="email-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                placeholder="name@example.com">
+            <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
         </div>
         <div class="form-group">
-            <label for="phone">
-                Phone
-            </label>
-            <input id="phone" name="phone" value="{{resume_info.phone}}" type="text" />
+            <label for="exampleInputPassword1">{{ form.address.label }}</label>
+            <input type="Text" class="form-control" id="exampleInputPassword1" placeholder="Address">
         </div>
         <div class="form-group">
-            <label for="email">
-                Email
-                <span>
-                    *
-                </span>
-            </label>
-            <input id="email" name="email" value="{{resume_info.email}}" type="email" />
-            <div class="error" id="email__error">
-            </div>
+            <label for="exampleInputPassword1">{{ form.phone.label }}</label>
+            <input type="phonenumber" class="form-control" id="exampleInputPassword1" placeholder="Mobile">
         </div>
         <div class="form-group">
-            <label for="about">
-                About You
-            </label>
-            <textarea id="about" name="about" placeholder="{{resume_info.about_you}}"></textarea>
+            <label for="exampleInputPassword1">{{ form.about_you.label }}</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Few words about yourself.">
         </div>
         <div class="form-group">
-            <label for="career">
-                Career Objectives
-            </label>
-            <textarea id="career" name="career" placeholder="{{resume_info.career}}"></textarea>
+            <label for="exampleInputPassword1">{{ form.education.label }}</label>
+            <input type="Text" class="form-control" id="exampleInputPassword1" placeholder="Education details">
         </div>
         <div class="form-group">
-            <label for="education">
-                Education
-            </label>
-            <textarea id="education" name="education" placeholder="{{resume_info.education}}"></textarea>
-        </div>
-        <div class="line-break">
-        </div>
-        <h2>
-            Work Experience
-        </h2>
-        <h3>
-            Most Recent Job
-        </h3>
-        <div class="form-date-group">
-            <div class="form-group">
-                <label for="job-1__start">
-                    Start Date
-                </label>
-                <input id="job-1__start" name="job-1__start" value="{{resume_info.job_1__start}}" type="date" />
-            </div>
-            <div class="form-group">
-                <label for="job-1__end">
-                    End Date
-                </label>
-                <input id="job-1__end" name="job-1__end" value="{{resume_info.job_1__end}}" type="date" />
-            </div>
+            <label for="exampleInputPassword1">{{ form.career.label }}</label>
+            <input type="Text" class="form-control" id="exampleInputPassword1" placeholder="Career">
         </div>
         <div class="form-group">
-            <label for="job-1__details">
-                Position Details
-            </label>
-            <textarea id="job-1__details" name="job-1__details" placeholder="{{resume_info.job_1__details}}"></textarea>
-        </div>
-        <div class="line-break">
-        </div>
-        <h3>
-            Past Job
-        </h3>
-        <div class="form-date-group">
-            <div class="form-group">
-                <label for="job-2__start">
-                    Start Date
-                </label>
-                <input id="job-2__start" name="job-2__start" value="{{resume_info.job_2__start}}" type="date" />
-            </div>
-            <div class="form-group">
-                <label for="job-2__end">
-                    End Date
-                </label>
-                <input id="job-2__end" name="job-2__end" value="{{resume_info.job_2__end}}" type="date" />
-            </div>
+            <label for="exampleInputPassword1">{{ form.job_1_start.label }}</label>
+            <input type="Date" class="form-control" id="exampleInputPassword1" placeholder="job_1_start">
         </div>
         <div class="form-group">
-            <label for="job-2__details">
-                Position Details
-            </label>
-            <textarea id="job-2__details" name="job-2__details" placeholder="{{resume_info.job_2__details}}"></textarea>
-        </div>
-        <div class="line-break">
-        </div>
-        <h3>
-            Another Past Job
-        </h3>
-        <div class="form-date-group">
-            <div class="form-group">
-                <label for="job-3__start">
-                    Start Date
-                </label>
-                <input id="job-3__start" name="job-3__start" value="{{resume_info.job_3__start}}" type="date" />
-            </div>
-            <div class="form-group">
-                <label for="job-3__end">
-                    End Date
-                </label>
-                <input id="job-3__end" name="job-3__end" value="{{resume_info.job_3__end}}" type="date" />
-            </div>
+            <label for="exampleInputPassword1">{{ form.job_1_end.label }}</label>
+            <input type="Date" class="form-control" id="exampleInputPassword1" placeholder="job_1_end">
         </div>
         <div class="form-group">
-            <label for="job-3__details">
-                Position Details
-            </label>
-            <textarea id="job-3__details" name="job-3__details" placeholder="{{resume_info.job_3__details}}"></textarea>
-        </div>
-        <div class="line-break">
+            <label for="exampleInputPassword1">{{ form.job_1_details.label }}</label>
+            <input type="Text" class="form-control" id="exampleInputPassword1" placeholder="job_1_details">
         </div>
         <div class="form-group">
-            <label for="references">
-                References
-            </label>
-            <textarea id="references" name="references" placeholder="{{resume_info.references}}"></textarea>
+            <label for="exampleInputPassword1">{{ form.job_2_start.label }}</label>
+            <input type="Date" class="form-control" id="exampleInputPassword1" placeholder="job_2_start">
         </div>
-        <div class="line-break">
+        <div class="form-group">
+            <label for="exampleInputPassword1">{{ form.job_2_end.label }}</label>
+            <input type="Date" class="form-control" id="exampleInputPassword1" placeholder="job_2_end">
         </div>
-        <input type="submit" value="Submit Info" />
-        <br>
-        <a class="button" style="background-color:red;" href="{% url 'accounts:login' %}">Back to home</a>
-    </form>
-    partial -->
-    <script src="{% static 'script.js' %}">
-    </script>
-</body>
+        <div class="form-group">
+            <label for="exampleInputPassword1">{{ form.job_2_details.label }}</label>
+            <input type="Text" class="form-control" id="exampleInputPassword1" placeholder="job_2_details">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">{{ form.job_3_start.label }}</label>
+            <input type="Date" class="form-control" id="exampleInputPassword1" placeholder="job_3_start">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">{{ form.job_3_end.label }}</label>
+            <input type="Date" class="form-control" id="exampleInputPassword1" placeholder="job_3_end">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">{{ form.job_3_details.label }}</label>
+            <input type="Text" class="form-control" id="exampleInputPassword1" placeholder="job_3_details">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">{{ form.references.label }}</label>
+            <input type="Text" class="form-control" id="exampleInputPassword1" placeholder="references">
+        </div>
+        <div class="form-group">
+            <label for="exampleInputPassword1">{{ form.image.label }}</label>
+            <input type="file" class="form-control" id="exampleInputPassword1" placeholder="Profile Picture">
+        </div>
 
-</html>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+{% endblock %}

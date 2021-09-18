@@ -1,35 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Home Page
+{% endblock %}
+
+
+{% block content %}
+
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-    <meta charset="utf-8" />
-    <title>
-        Resume Builder
-    </title>
-    <link href="{% static 'style.css' %}" rel="stylesheet" />
-</head>
-
-<body>
-    {% if request.user.is_authenticated %}
-    <script>
-        window.location.href = "{% url 'accounts:profile' %}";
-    </script>
-    {% endif %}
-    <!-- partial:home.partial.html -->
-    <div id="javascript_header">
+<!-- Header -->
+<header class="w3-display-container w3-content w3-wide" style="max-width:1500px;padding-top:50px " id="home">
+    <img class="w3-image" src="{% static 'images/header-background.jpg' %}" alt="Architecture" width="1500"
+        height="800">
+    <div class="w3-display-middle w3-margin-top w3-center">
+        <h1 class="w3-xxlarge w3-text-white"><span class="w3-padding w3-black w3-opacity-min"><b>RB</b></span> <span
+                class="w3-hide-small w3-text-dark-grey">Resume</span></h1>
     </div>
-    Hello there...!
-    Do you want to create a resume?
-    Please Register here:<p class="">
-        <a style="text-decoration: none; padding: 5px;" href="{% url 'accounts:register' %}">Register</a>
-    </p>
-    Already Have Account? Login Here:<p class="">
-        <a style="text-decoration: none; padding: 5px;" href="{% url 'accounts:login' %}">Log-in</a>
-    </p>
-    <!-- partial -->
-    <script src="{% static 'script.js' %}">
-    </script>
-</body>
+</header>
 
-</html>
+<!-- Page content 
+<div class="w3-content w3-padding" style="max-width:1564px"> </div>
+    End page content -->
+
+{% endblock %}

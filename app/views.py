@@ -1,6 +1,8 @@
 
+from django.db.models.manager import EmptyManager
 from django.http.response import HttpResponse
 from django.contrib.auth.decorators import login_required
+from django.utils.functional import empty
 from app.forms import ResumeForm
 from django.shortcuts import redirect, render
 from .models import Resume
@@ -19,6 +21,9 @@ def create_resume(request):
         form = ResumeForm(request.POST, request.FILES)
         if form.is_valid():
             data = Resume()
+            # u = Resume.objects.filter(username_id=request.user.id)
+            # if u:
+            #     Resume.objects.filter(username_id=u).delete()
             data.username = request.user
             data.full_name = form.cleaned_data['full_name']
             data.address = form.cleaned_data['address']
@@ -40,12 +45,13 @@ def create_resume(request):
             if form.cleaned_data['image'] is not None:
                 data.image = form.cleaned_data['image']
             data.save()
-            return redirect(request, "app:profile")
+            return render(request, "home")
     else:
         form = ResumeForm()
     return render(request, "create-resume.html", {'form': form})
 
 
+@login_required
 def resume(request):
 
     resume_info = Resume.objects.get(username_id=request.user.id)
